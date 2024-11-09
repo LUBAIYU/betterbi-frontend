@@ -62,4 +62,14 @@ declare namespace API {
     chartType?: string
     userId?: string
   }
+
+  type UserVo = {
+    id: string
+    userAccount: string
+    userName: string
+    userAvatar: string
+    userRole: number
+    createTime: Date
+    updateTime: Date
+  }
 }

@@ -69,3 +69,13 @@ export const updateUserByIdAPI = (data: API.UserUpdateParams) => {
     data,
   }) as Promise<API.Result>
 }
+
+/**
+ * 获取登录用户
+ */
+export const getLoginUserAPI = () => {
+  return request({
+    method: 'GET',
+    url: '/user/getLoginUser',
+  }) as Promise<API.Result>
+}
