@@ -20,7 +20,7 @@ const userLogin = async () => {
   const res = await userLoginAPI(formData.value)
   if (res.code === 200) {
     message.success('登录成功')
-    await router.push('/')
+    router.push('/')
   } else {
     message.error(res.message)
   }

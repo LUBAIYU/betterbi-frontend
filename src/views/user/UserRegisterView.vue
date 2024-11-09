@@ -73,7 +73,7 @@ const userRegister = async () => {
   const res = await userRegisterAPI(formData.value)
   if (res.code === 200) {
     message.success('注册成功')
-    await router.push('/user/login')
+    router.push('/user/login')
   } else {
     message.error(res.message)
   }
