@@ -102,7 +102,7 @@ const userLogin = async () => {
   flex-direction: column;
   background-image: url('https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png');
   background-size: contain;
-  min-height: 85vh;
+  min-height: 100vh;
 }
 
 .header {

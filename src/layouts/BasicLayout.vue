@@ -26,11 +26,13 @@ onMounted(() => getLoginUser())
   <div id="basicLayout">
     <a-layout style="min-height: 100vh">
       <a-layout-header class="header">
+        <div class="logo">
+          <img src="@/assets/betterbi-logo.png" alt="" />
+          <h2 class="font">智能BI</h2>
+        </div>
         <global-header />
       </a-layout-header>
-      <a-layout-content class="content">
-        <router-view />
-      </a-layout-content>
+      <a-layout-content class="content"></a-layout-content>
       <a-layout-footer class="footer">
         <a href="https://github.com/LUBAIYU" target="_blank">
           GitHub地址 by 路白榆
@@ -42,16 +44,33 @@ onMounted(() => getLoginUser())
 
 <style scoped>
 #basicLayout .header {
-  box-shadow: #eee 1px 1px 5px;
-  background-color: #eeeeee;
+  display: flex;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+#basicLayout .header .logo {
+  display: flex;
+  height: 48px;
+  margin: 10px 0 0 -20px;
+}
+
+#basicLayout .header .font {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin: 0 20px 0 10px;
 }
 
 #basicLayout .content {
-  background: linear-gradient(to right, #fefefe, #fff);
+  background: #efefef;
+  display: grid;
 }
 
 #basicLayout .footer {
-  background: #efefef;
+  background: #ffffff;
   padding: 16px;
   position: sticky;
   bottom: 0;
