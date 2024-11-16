@@ -79,3 +79,11 @@ export const getLoginUserAPI = () => {
     url: '/user/getLoginUser',
   }) as Promise<API.Result>
 }
+
+// 退出登录
+export const userLogoutAPI = () => {
+  return request({
+    method: 'POST',
+    url: '/user/logout',
+  }) as Promise<API.Result>
+}

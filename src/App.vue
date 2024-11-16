@@ -1,5 +1,5 @@
 <template>
-  <basic-layout/>
+  <basic-layout />
 </template>
 
 <script setup lang="ts">

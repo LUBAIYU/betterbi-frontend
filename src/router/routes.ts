@@ -26,11 +26,8 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     },
   },
   {
-    name: '框架',
-    path: '/basic',
-    component: () => import('@/layouts/BasicLayout.vue'),
-    meta: {
-      hidden: true,
-    },
+    name: '新增图表',
+    path: '/chart/add',
+    component: () => import('@/views/chart/ChartAddView.vue'),
   },
 ]

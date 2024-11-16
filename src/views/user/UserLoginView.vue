@@ -4,8 +4,10 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { userLoginAPI } from '@/api/user'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/UserStore'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const formData = ref<API.UserLoginParams>({
   userAccount: '',
@@ -20,6 +22,7 @@ const userLogin = async () => {
   const res = await userLoginAPI(formData.value)
   if (res.code === 200) {
     message.success('登录成功')
+    userStore.setUserInfo(res.data)
     router.push('/')
   } else {
     message.error(res.message)
@@ -30,7 +33,6 @@ const userLogin = async () => {
 <template>
   <div id="userLoginView">
     <div class="header">
-      <img class="logo" src="@/assets/betterbi-logo.png" alt="" />
       <h2 class="font">用户登录</h2>
     </div>
     <div class="form">
@@ -102,7 +104,7 @@ const userLogin = async () => {
   flex-direction: column;
   background-image: url('https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png');
   background-size: contain;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .header {

@@ -83,7 +83,6 @@ const userRegister = async () => {
 <template>
   <div id="userRegisterView">
     <div class="header">
-      <img class="logo" src="@/assets/betterbi-logo.png" alt="" />
       <h2 class="font">用户注册</h2>
     </div>
     <div class="form">
@@ -139,7 +138,7 @@ const userRegister = async () => {
   flex-direction: column;
   background-image: url('https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png');
   background-size: contain;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .header {
