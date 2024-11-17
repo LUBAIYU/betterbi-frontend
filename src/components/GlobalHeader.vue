@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { routes } from '@/router/routes'
 import { useUserStore } from '@/stores/UserStore'
@@ -69,7 +69,7 @@ const userLogout = async () => {
   }
 }
 
-onMounted(() => getLoginUser())
+watch(menuItems, () => getLoginUser())
 </script>
 
 <template>

@@ -69,3 +69,18 @@ export const listChartsByPageAPI = (data: API.ChartQueryAdminParams) => {
     data,
   }) as Promise<API.Result>
 }
+
+/**
+ * 根据AI生成图表
+ * @param data
+ */
+export const genChartByAiApI = (data: FormData) => {
+  return request({
+    method: 'POST',
+    url: '/chart/genChart',
+    data,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }) as Promise<API.Result>
+}

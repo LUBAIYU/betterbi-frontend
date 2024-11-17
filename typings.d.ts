@@ -72,4 +72,10 @@ declare namespace API {
     createTime: Date
     updateTime: Date
   }
+
+  type AiChartVo = {
+    chartId: string
+    genChart: string
+    genResult: string
+  }
 }
