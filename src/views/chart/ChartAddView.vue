@@ -4,6 +4,7 @@ import type { SelectProps } from 'ant-design-vue'
 import { message } from 'ant-design-vue'
 import { UploadOutlined } from '@ant-design/icons-vue'
 import { genChartByAiApI } from '@/api/chart'
+import VueECharts from '@/components/VueECharts.vue'
 
 const options = ref<SelectProps['options']>([
   {
@@ -34,6 +35,12 @@ const formState = ref({
   chartType: '',
 })
 
+const response = ref<API.AiChartVo>({
+  chartId: '',
+  genChart: '',
+  genResult: '',
+})
+
 const file = ref<File | null>(null)
 
 const beforeUpload = (uploadFile: File) => {
@@ -59,6 +66,7 @@ const handleSubmit = async () => {
   const res = await genChartByAiApI(data)
   if (res.code === 200 && res?.data) {
     message.success('分析成功')
+    response.value = res.data
   } else {
     message.error(res.message)
   }
@@ -127,18 +135,32 @@ const clear = () => {
         </a-form-item>
       </a-form>
     </a-card>
+    <a-card
+      title="生成图表"
+      :bordered="false"
+      class="card-style"
+      style="margin-bottom: 20px"
+    >
+      <div>分析结论：{{ response?.genResult }}</div>
+      <div>
+        生成图表：
+        <VueECharts :option="response?.genChart" />
+      </div>
+    </a-card>
   </div>
 </template>
 
 <style scoped>
 #chartAddView {
   display: flex;
-  justify-content: center;
-  align-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-style {
   width: 80%;
   margin-top: 20px;
+  max-height: 600px;
+  overflow-y: auto;
 }
 </style>

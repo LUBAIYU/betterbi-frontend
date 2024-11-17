@@ -45,10 +45,13 @@ onMounted(() => getLoginUser())
   display: flex;
   background-color: #ffffff;
   width: 100%;
+  position: fixed;
+  z-index: 1;
 }
 
 #basicLayout .content {
   background: #efefef;
+  padding-top: 60px;
 }
 
 #basicLayout .footer {
