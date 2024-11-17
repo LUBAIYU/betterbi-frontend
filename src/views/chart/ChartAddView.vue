@@ -23,10 +23,6 @@ const options = ref<SelectProps['options']>([
     value: '散点图',
     label: '散点图',
   },
-  {
-    value: '雷达图',
-    label: '雷达图',
-  },
 ])
 
 const formState = ref({
@@ -41,6 +37,7 @@ const response = ref<API.AiChartVo>({
   genResult: '',
 })
 
+const loading = ref<boolean>(false)
 const file = ref<File | null>(null)
 
 const beforeUpload = (uploadFile: File) => {
@@ -54,6 +51,14 @@ const handleSubmit = async () => {
     message.error('请上传文件！')
     return
   }
+  // 清空前一次的返回结果
+  response.value = {
+    chartId: '',
+    genChart: '',
+    genResult: '',
+  }
+  // 显示加载状态
+  loading.value = true
 
   // 封装数据
   const data = new FormData()
@@ -70,6 +75,8 @@ const handleSubmit = async () => {
   } else {
     message.error(res.message)
   }
+  // 隐藏加载状态
+  loading.value = false
 }
 
 // 清除表单数据
@@ -85,82 +92,87 @@ const clear = () => {
 
 <template>
   <div id="chartAddView">
-    <a-card title="新增图表" :bordered="false" class="card-style">
-      <a-form :model="formState" @finish="handleSubmit">
-        <a-form-item
-          label="分析目标"
-          name="goal"
-          :rules="[{ required: true, message: '请输入分析目标！' }]"
-        >
-          <a-textarea
-            v-model:value="formState.goal"
-            placeholder="请输入你的分析需求，比如：分析网站用户的增长情况"
-          />
-        </a-form-item>
-        <a-form-item label="图表名称" style="margin-left: 11px">
-          <a-input
-            v-model:value="formState.name"
-            placeholder="请输入图表名称"
-          />
-        </a-form-item>
-        <a-form-item label="图表类型" style="margin-left: 11px">
-          <a-select
-            v-model:value="formState.chartType"
-            ref="select"
-            :options="options"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item label="原始数据" style="margin-left: 11px">
-          <a-upload accept=".xlsx, .xls" :before-upload="beforeUpload">
-            <a-button>
-              <upload-outlined />
-              上传 Excel 文件
-            </a-button>
-          </a-upload>
-        </a-form-item>
-        <a-form-item>
-          <div
-            style="
-              display: flex;
-              align-content: center;
-              justify-content: center;
-            "
-          >
-            <a-space>
-              <a-button type="primary" html-type="submit">提交</a-button>
-              <a-button type="default" @click="clear">重置</a-button>
-            </a-space>
+    <a-row>
+      <a-col :span="12">
+        <a-card title="智能分析" :bordered="false" class="card-style">
+          <a-form :model="formState" @finish="handleSubmit">
+            <a-form-item
+              label="分析目标"
+              name="goal"
+              :rules="[{ required: true, message: '请输入分析目标！' }]"
+            >
+              <a-textarea
+                v-model:value="formState.goal"
+                placeholder="请输入你的分析需求，比如：分析网站用户的增长情况"
+              />
+            </a-form-item>
+            <a-form-item label="图表名称" style="margin-left: 11px">
+              <a-input
+                v-model:value="formState.name"
+                placeholder="请输入图表名称"
+              />
+            </a-form-item>
+            <a-form-item label="图表类型" style="margin-left: 11px">
+              <a-select
+                v-model:value="formState.chartType"
+                ref="select"
+                :options="options"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item label="原始数据" style="margin-left: 11px">
+              <a-upload accept=".xlsx, .xls" :before-upload="beforeUpload">
+                <a-button>
+                  <upload-outlined />
+                  上传 Excel 文件
+                </a-button>
+              </a-upload>
+            </a-form-item>
+            <a-form-item>
+              <div
+                style="
+                  display: flex;
+                  align-content: center;
+                  justify-content: center;
+                "
+              >
+                <a-space>
+                  <a-button type="primary" html-type="submit">提交</a-button>
+                  <a-button type="default" @click="clear">重置</a-button>
+                </a-space>
+              </div>
+            </a-form-item>
+          </a-form>
+        </a-card>
+      </a-col>
+      <a-col :span="12">
+        <a-card title="分析结论" :bordered="false" class="card-style">
+          <div v-if="response?.genResult">{{ response.genResult }}</div>
+          <div v-else-if="!response.genResult && !loading">
+            请先在左侧进行提交
           </div>
-        </a-form-item>
-      </a-form>
-    </a-card>
-    <a-card
-      title="生成图表"
-      :bordered="false"
-      class="card-style"
-      style="margin-bottom: 20px"
-    >
-      <div>分析结论：{{ response?.genResult }}</div>
-      <div>
-        生成图表：
-        <VueECharts :option="response?.genChart" />
-      </div>
-    </a-card>
+          <a-spin :spinning="loading" />
+        </a-card>
+        <a-divider />
+        <a-card title="可视化图表" :bordered="false" class="card-style">
+          <VueECharts v-if="response?.genChart" :option="response.genChart" />
+          <div v-else-if="!response?.genChart && !loading">
+            请先在左侧进行提交
+          </div>
+          <a-spin :spinning="loading" />
+        </a-card>
+      </a-col>
+    </a-row>
   </div>
 </template>
 
 <style scoped>
 #chartAddView {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100%;
+  overflow: hidden;
 }
 
 .card-style {
-  width: 80%;
-  margin-top: 20px;
-  max-height: 600px;
-  overflow-y: auto;
+  margin: 20px 20px 0 20px;
 }
 </style>

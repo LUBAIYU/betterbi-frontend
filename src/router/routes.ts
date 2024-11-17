@@ -4,7 +4,7 @@ export const routes: Readonly<RouteRecordRaw[]> = [
   {
     name: '首页',
     path: '/',
-    redirect: '/add_chart',
+    redirect: '/chart/analysis',
     meta: {
       hidden: true,
     },
@@ -26,8 +26,8 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     },
   },
   {
-    name: '添加图表页',
-    path: '/add_chart',
+    name: '智能分析',
+    path: '/chart/analysis',
     component: () => import('@/views/chart/ChartAddView.vue'),
   },
 ]
