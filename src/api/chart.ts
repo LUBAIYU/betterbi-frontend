@@ -9,7 +9,7 @@ export const addChartAPI = (data: API.ChartAddParams) => {
     method: 'POST',
     url: '/chart/add',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -20,7 +20,7 @@ export const deleteChartByIdAPI = (id: string) => {
   return request({
     method: 'DELETE',
     url: `/chart/delete/${id}`,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -32,7 +32,7 @@ export const updateChartByIdAPI = (data: API.ChartUpdateParams) => {
     method: 'PUT',
     url: '/chart/update',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -43,7 +43,7 @@ export const getChartByIdAPI = (id: string) => {
   return request({
     method: 'GET',
     url: `/chart/get/${id}`,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -55,7 +55,7 @@ export const listMyChartByPageAPI = (data: API.ChartQueryParams) => {
     method: 'POST',
     url: '/chart/my/page',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<API.PageResponse>>
 }
 
 /**
@@ -67,7 +67,7 @@ export const listChartsByPageAPI = (data: API.ChartQueryAdminParams) => {
     method: 'POST',
     url: '/chart/page',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -82,5 +82,5 @@ export const genChartByAiApI = (data: FormData) => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }

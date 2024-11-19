@@ -30,4 +30,9 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     path: '/chart/analysis',
     component: () => import('@/views/chart/ChartAddView.vue'),
   },
+  {
+    name: '我的图表',
+    path: '/chart/list',
+    component: () => import('@/views/chart/ChartListView.vue'),
+  },
 ]

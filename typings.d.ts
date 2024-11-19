@@ -1,7 +1,7 @@
 declare namespace API {
-  type Result = {
+  type Result<T> = {
     code: number
-    data: never
+    data: T
     message: string
   }
 
@@ -50,6 +50,7 @@ declare namespace API {
     current: number
     pageSize: number
     id?: string
+    name?: string
     goal?: string
     chartType?: string
   }
@@ -77,5 +78,22 @@ declare namespace API {
     chartId: string
     genChart: string
     genResult: string
+  }
+
+  type ChartVo = {
+    id: string
+    name: string
+    goal: string
+    chartData: string
+    chartType: string
+    genChart: string
+    genResult: string
+    createTime: Date
+    updateTime: Date
+  }
+
+  type PageResponse = {
+    total: number
+    records: never[]
   }
 }
