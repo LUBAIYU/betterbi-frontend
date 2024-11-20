@@ -13,11 +13,13 @@ const loginUser = ref<API.UserVo>()
 // 查询条件
 const queryData = ref({
   current: 1,
-  pageSize: 10,
+  pageSize: 2,
   name: '',
 })
 
 const getChartList = async () => {
+  // 加载
+  loading.value = true
   const res = await listMyChartByPageAPI({
     current: queryData.value.current,
     pageSize: queryData.value.pageSize,
@@ -29,6 +31,8 @@ const getChartList = async () => {
   } else {
     message.error(res.message)
   }
+  // 加载完成
+  loading.value = false
 }
 
 const getLoginUser = async () => {
