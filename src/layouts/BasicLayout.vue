@@ -1,25 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { getLoginUserAPI } from '@/api/user'
-import { message } from 'ant-design-vue'
-import { useRouter } from 'vue-router'
 import GlobalHeader from '@/components/GlobalHeader.vue'
-
-const router = useRouter()
-
-const loginUser = ref<API.UserVo>()
-
-const getLoginUser = async () => {
-  const res = await getLoginUserAPI()
-  if (res.code === 200) {
-    loginUser.value = res.data
-  } else {
-    message.error(res.message)
-    router.push('/user/login')
-  }
-}
-
-onMounted(() => getLoginUser())
 </script>
 
 <template>

@@ -28,11 +28,19 @@ export const routes: Readonly<RouteRecordRaw[]> = [
   {
     name: '智能分析',
     path: '/chart/analysis',
-    component: () => import('@/views/chart/ChartAddView.vue'),
+    component: () => import('@/views/chart/ChartAsyncView.vue'),
   },
   {
     name: '我的图表',
     path: '/chart/list',
     component: () => import('@/views/chart/ChartListView.vue'),
+  },
+  {
+    name: '个人主页',
+    path: '/info/edit',
+    component: () => import('@/views/user/UserInfoView.vue'),
+    meta: {
+      hidden: true,
+    },
   },
 ]

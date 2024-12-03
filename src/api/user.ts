@@ -9,7 +9,7 @@ export const userLoginAPI = (data: API.UserLoginParams) => {
     method: 'POST',
     url: '/user/login',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<API.UserVo>>
 }
 
 /**
@@ -21,7 +21,7 @@ export const userRegisterAPI = (data: API.UserRegisterParams) => {
     method: 'POST',
     url: '/user/register',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -32,7 +32,7 @@ export const getUserByIdAPI = (id: string) => {
   return request({
     method: 'GET',
     url: `/user/get/${id}`,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -43,7 +43,7 @@ export const deleteUserByIdAPI = (id: string) => {
   return request({
     method: 'DELETE',
     url: `/user/delete/${id}`,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -55,7 +55,7 @@ export const listUsersByPage = (data: API.UserPageParams) => {
     method: 'POST',
     url: '/user/page',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -67,7 +67,7 @@ export const updateUserByIdAPI = (data: API.UserUpdateParams) => {
     method: 'PUT',
     url: '/user/update',
     data,
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
 }
 
 /**
@@ -77,7 +77,7 @@ export const getLoginUserAPI = () => {
   return request({
     method: 'GET',
     url: '/user/getLoginUser',
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<API.UserVo>>
 }
 
 // 退出登录
@@ -85,5 +85,22 @@ export const userLogoutAPI = () => {
   return request({
     method: 'POST',
     url: '/user/logout',
-  }) as Promise<API.Result>
+  }) as Promise<API.Result<never>>
+}
+
+// 获取用户信息
+export const getUserVoByIdAPI = (id: string) => {
+  return request({
+    method: 'GET',
+    url: `/user/get/vo/${id}`,
+  }) as Promise<API.Result<never>>
+}
+
+// 上传头像
+export const uploadAvatarAPI = (data: FormData) => {
+  return request({
+    method: 'POST',
+    url: '/user/upload/avatar',
+    data,
+  }) as Promise<API.Result<string>>
 }

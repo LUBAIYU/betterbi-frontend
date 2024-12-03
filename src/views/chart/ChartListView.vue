@@ -50,7 +50,7 @@ onMounted(() => getChartList())
 
 <template>
   <div id="chartListView">
-    <div style="margin-top: 10px">
+    <div style="margin: 20px 0 10px 22px; width: 1420px">
       <a-input-search
         placeholder="请输入图表名称"
         enter-button
@@ -92,16 +92,39 @@ onMounted(() => getChartList())
         <a-list-item key="item.id">
           <a-card style="width: 100%">
             <a-list-item-meta
-              :avatar="loginUser?.userAvatar"
               :title="item.name"
               :description="
-                item.chartType ? '图表类型' + item.chartType : undefined
+                item.chartType ? '图表类型：' + item.chartType : undefined
+              "
+            >
+              <template #avatar>
+                <a-avatar :src="loginUser?.userAvatar" />
+              </template>
+            </a-list-item-meta>
+            <div style="margin-bottom: 16px" />
+            <p>{{ '分析目标：' + item.goal }}</p>
+            <div style="margin-bottom: 16px" />
+            <a-result
+              v-if="item.status === 0"
+              status="warning"
+              title="待生成"
+              :sub-title="
+                item.execMessage ?? '当前图表生成队列繁忙，请耐心等候'
               "
             />
-            <div style="margin-bottom: 16px" />
-            <p>{{ '分析目标' + item.goal }}</p>
-            <div style="margin-bottom: 16px" />
-            <VueECharts :option="item.genChart" />
+            <a-result
+              v-else-if="item.status === 3"
+              status="info"
+              title="图表生成中"
+              :sub-title="item.execMessage"
+            />
+            <a-result
+              v-else-if="item.status === 2"
+              status="error"
+              title="图表生成失败"
+              :sub-title="item.execMessage"
+            />
+            <VueECharts :option="item.genChart" v-else />
           </a-card>
         </a-list-item>
       </template>

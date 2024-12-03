@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, getCurrentInstance, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { routes } from '@/router/routes'
 import { useUserStore } from '@/stores/UserStore'
 import { getLoginUserAPI, userLogoutAPI } from '@/api/user'
 import { message } from 'ant-design-vue'
-import { UserOutlined } from '@ant-design/icons-vue'
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons-vue'
 
 const router = useRouter()
 const userStore = useUserStore()
 const [messageApi] = message.useMessage()
+
+const { proxy } = getCurrentInstance()
+const eventBus = proxy?.$bus
 
 // 菜单选中项
 const current = ref<string[]>(['/'])
@@ -62,6 +65,7 @@ const getLoginUser = async () => {
 const userLogout = async () => {
   const res = await userLogoutAPI()
   if (res.code === 200) {
+    userInfo.value = undefined
     userStore.setUserInfo(undefined)
     router.push('/user/login')
   } else {
@@ -70,6 +74,10 @@ const userLogout = async () => {
 }
 
 watch(menuItems, () => getLoginUser())
+
+onMounted(() => {
+  eventBus.on('login', getLoginUser)
+})
 </script>
 
 <template>
@@ -81,14 +89,21 @@ watch(menuItems, () => getLoginUser())
     <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items" />
     <div class="avatar-position">
       <a-dropdown placement="bottom">
-        <a-avatar size="large" :src="userInfo?.userAvatar">
+        <a-avatar :src="userInfo?.userAvatar" size="large" shape="circle">
           <template #icon>
-            <UserOutlined />
+            <UserOutlined v-if="!userInfo?.userAvatar" />
           </template>
         </a-avatar>
         <template #overlay>
           <a-menu>
-            <a-menu-item @click="userLogout">退出登录</a-menu-item>
+            <a-menu-item @click="$router.push('/info/edit')">
+              <UserOutlined />
+              个人主页
+            </a-menu-item>
+            <a-menu-item @click="userLogout">
+              <LogoutOutlined style="color: red" />
+              <span style="color: red; margin-left: 5px">退出登录</span>
+            </a-menu-item>
           </a-menu>
         </template>
       </a-dropdown>

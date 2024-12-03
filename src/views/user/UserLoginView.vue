@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, getCurrentInstance } from 'vue'
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { userLoginAPI } from '@/api/user'
 import { message } from 'ant-design-vue'
@@ -8,6 +8,9 @@ import { useUserStore } from '@/stores/UserStore'
 
 const router = useRouter()
 const userStore = useUserStore()
+
+const { proxy } = getCurrentInstance()
+const eventBus = proxy?.$bus
 
 const formData = ref<API.UserLoginParams>({
   userAccount: '',
@@ -24,6 +27,7 @@ const userLogin = async () => {
     message.success('登录成功')
     userStore.setUserInfo(res.data)
     router.push('/')
+    eventBus.emit('login')
   } else {
     message.error(res.message)
   }
